@@ -17,6 +17,9 @@ Projeto de portfólio: o código precisa ser limpo, testado e explicável em ent
 - Gerar client: `npx prisma generate`
 - Testes: `npm test` / `npm run test:e2e`
 - Lint: `npm run lint`
+- Docs da API (Swagger): `http://localhost:3000/docs`
+- App inteira em containers (banco + migrations + API):
+  `docker compose --profile app up --build` (porta do host via `API_PORT`, padrão 3000)
 
 ## Estrutura
 - `src/<modulo>/` com `*.module.ts`, `*.service.ts`, `*.controller.ts` e `dto/`
