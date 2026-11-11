@@ -1,0 +1,24 @@
+# Blueprint do Render: infraestrutura como código.
+# No painel: New > Blueprint > selecionar este repositório.
+services:
+  - type: web
+    name: fintrack-api
+    runtime: docker
+    plan: free
+    # Mesma região do banco no Neon (AWS us-east-1) para baixa latência
+    region: virginia
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    # Só publica depois que todos os checks do GitHub passarem no commit,
+    # incluindo o job que aplica as migrations (ver .github/workflows/ci.yml)
+    autoDeployTrigger: checksPass
+    envVars:
+      # Connection string do Neon; preenchida no painel, nunca versionada
+      - key: DATABASE_URL
+        sync: false
+      # O Render gera um valor aleatório forte na criação do serviço
+      - key: JWT_SECRET
+        generateValue: true
+      # PORT é definida automaticamente pelo Render e lida no main.ts
