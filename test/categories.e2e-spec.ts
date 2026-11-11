@@ -1,51 +1,19 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
 import { randomUUID } from 'node:crypto';
 import request from 'supertest';
-import { App } from 'supertest/types';
-import { AppModule } from './../src/app.module';
-import { PrismaService } from './../src/prisma/prisma.service';
+import { createTestContext, TestContext } from './helpers';
 
 describe('Categories (e2e)', () => {
-  let app: INestApplication<App>;
-  let prisma: PrismaService;
-  const emails: string[] = [];
-
-  // Cria um usuário com e-mail único e devolve o header Authorization
-  async function authAs(): Promise<string> {
-    const email = `e2e-${randomUUID()}@test.dev`;
-    emails.push(email);
-    const credentials = { email, password: 'senha-segura-123' };
-    await request(app.getHttpServer())
-      .post('/auth/register')
-      .send({ name: 'E2E', ...credentials })
-      .expect(201);
-    const res = await request(app.getHttpServer())
-      .post('/auth/login')
-      .send(credentials)
-      .expect(201);
-    return `Bearer ${(res.body as { accessToken: string }).accessToken}`;
-  }
+  let ctx: TestContext;
+  let app: TestContext['app'];
+  let prisma: TestContext['prisma'];
+  const authAs = () => ctx.authAs();
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleRef.createNestApplication();
-    // Mesma configuração do main.ts
-    app.useGlobalPipes(
-      new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
-    );
-    await app.init();
-    prisma = app.get(PrismaService);
+    ctx = await createTestContext();
+    ({ app, prisma } = ctx);
   });
 
-  afterAll(async () => {
-    // onDelete: Cascade remove categorias/transações dos usuários de teste
-    await prisma.user.deleteMany({ where: { email: { in: emails } } });
-    await app.close();
-  });
+  afterAll(() => ctx.close());
 
   it('exige autenticação (401)', () => {
     return request(app.getHttpServer()).get('/categories').expect(401);
