@@ -60,7 +60,7 @@ Projeto de portfólio: o código precisa ser limpo, testado e explicável em ent
 ## Roadmap
 1. [x] Fundação: repo, Docker, Prisma, health check
 2. [x] Autenticação JWT
-3. [ ] Categorias (em andamento, branch `feat/categories`)
+3. [x] Categorias
 4. [ ] Transações (filtros por período/categoria, paginação, ordenação)
 5. [ ] Orçamentos mensais e relatórios
 6. [ ] Testes, Swagger, Dockerfile, GitHub Actions, deploy
