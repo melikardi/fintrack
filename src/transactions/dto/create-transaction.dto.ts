@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsDateString,
@@ -17,6 +18,11 @@ const MAX_INT32 = 2_147_483_647;
 
 export class CreateTransactionDto {
   // Sempre positivo: o sinal vem de `type` (INCOME/EXPENSE)
+  @ApiProperty({
+    type: 'integer',
+    example: 15990,
+    description: 'Valor em centavos (R$ 159,90 = 15990). Sempre positivo.',
+  })
   @IsInt()
   @IsPositive()
   @Max(MAX_INT32)

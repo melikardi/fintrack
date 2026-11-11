@@ -1,3 +1,4 @@
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -20,6 +21,8 @@ import { CreateBudgetDto } from './dto/create-budget.dto';
 import { ListBudgetsQuery } from './dto/list-budgets.query';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
 
+@ApiTags('budgets')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('budgets')
 export class BudgetsController {

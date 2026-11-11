@@ -1,4 +1,4 @@
-import { PickType } from '@nestjs/mapped-types';
+import { PickType } from '@nestjs/swagger';
 import { CreateBudgetDto } from './create-budget.dto';
 
 // Só o limite é editável. Categoria/mês identificam o orçamento:

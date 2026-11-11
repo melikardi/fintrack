@@ -1,3 +1,4 @@
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -20,6 +21,8 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ListTransactionsQuery } from './dto/list-transactions.query';
 
+@ApiTags('transactions')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('transactions')
 export class TransactionsController {
