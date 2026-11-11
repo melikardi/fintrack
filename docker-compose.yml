@@ -10,6 +10,42 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fintrack -d fintrack"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Os serviços abaixo só sobem com o profile "app":
+  #   docker compose --profile app up --build
+  # Sem o profile, `docker compose up -d` continua subindo só o banco (dev).
+  migrate:
+    profiles: [app]
+    build:
+      context: .
+      target: migrate
+    environment:
+      DATABASE_URL: postgresql://fintrack:fintrack@db:5432/fintrack
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    profiles: [app]
+    build:
+      context: .
+      target: runtime
+    environment:
+      DATABASE_URL: postgresql://fintrack:fintrack@db:5432/fintrack
+      # Lido do .env da raiz (o compose usa esse arquivo para interpolação)
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env}
+      PORT: 3000
+    ports:
+      # Porta do host configurável, para não brigar com o `npm run start:dev`
+      - "${API_PORT:-3000}:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
 
 volumes:
   pgdata:

@@ -1,0 +1,21 @@
+# Dependências e artefatos são recriados dentro da imagem
+node_modules
+dist
+coverage
+*.tsbuildinfo
+src/generated
+
+# Segredos nunca entram na imagem
+.env
+.env.*
+!.env.example
+
+# Não precisam estar na imagem
+.git
+.github
+.claude
+test
+*.md
+docker-compose.yml
+Dockerfile
+.dockerignore
