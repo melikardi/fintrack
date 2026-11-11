@@ -4,6 +4,8 @@ import { CategoriesController } from './categories.controller';
 
 @Module({
   providers: [CategoriesService],
-  controllers: [CategoriesController]
+  controllers: [CategoriesController],
+  // Outros módulos reutilizam findOne para checar o dono da categoria
+  exports: [CategoriesService],
 })
 export class CategoriesModule {}
