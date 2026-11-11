@@ -60,3 +60,11 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 .env.*
 !.env.example
+.claude/
+.cursor/
+.agents/
+.devin/
+
+/generated/prisma
+/generated
+/generated
