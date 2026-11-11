@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateTransactionDto } from './create-transaction.dto';
 
 // Todos os campos de criação, mas opcionais (PATCH parcial)
