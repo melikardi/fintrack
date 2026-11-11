@@ -61,7 +61,7 @@ Projeto de portfólio: o código precisa ser limpo, testado e explicável em ent
 1. [x] Fundação: repo, Docker, Prisma, health check
 2. [x] Autenticação JWT
 3. [x] Categorias
-4. [ ] Transações (filtros por período/categoria, paginação, ordenação)
-5. [ ] Orçamentos mensais e relatórios
+4. [x] Transações (filtros por período/categoria, paginação, ordenação)
+5. [x] Orçamentos mensais e relatórios
 6. [ ] Testes, Swagger, Dockerfile, GitHub Actions, deploy
 7. [ ] Frontend (React/Next.js)
