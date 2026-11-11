@@ -68,3 +68,5 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 /generated/prisma
 /generated
 /generated
+/src/generated
+.windsurf/
